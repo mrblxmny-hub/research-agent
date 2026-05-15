@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: research-agent
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+    disk:
+      name: data
+      mountPath: /opt/render/project/src
+      sizeGB: 1
